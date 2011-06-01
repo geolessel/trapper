@@ -1,0 +1,14 @@
+%form{:action => "#{request.path}", :method => 'post'}
+  %label{:for => 'trap[url]'} URL
+  %input{:type => 'textfield', :name => 'trap[url]', :id => 'trap[url]', :value => "#{@trap.url}"}/
+  %br
+
+  %label{:for => 'trap[name]'} Name
+  %input{:type => 'textfield', :name => 'trap[name]', :id => 'trap[name]', :value => "#{@trap.name}"}/
+  %br
+
+  %label{:for => 'trap[description]'} Description
+  %input{:type => 'textfield', :name => 'trap[description]', :id => 'trap[description]', :value => "#{@trap.description}"}/
+  %br
+
+  %input{:type => 'submit', :name => 'submit'}/

@@ -1,2 +1,8 @@
 %h2 Welcome to Trapper!
 %p Your trapped sites are below
+%ul
+  - @sites.each do |site|
+    %li
+      %strong<
+      %a{:href => url(site.url)}= site.name
+      = " - " + site.description
