@@ -11,4 +11,8 @@
   %input{:type => 'textfield', :name => 'trap[description]', :id => 'trap[description]', :value => "#{@trap.description}"}/
   %br
 
+  %label{:for => 'tags'} Tags (space separated)
+  %input{:type => 'textfield', :name => 'tags', :id => 'tags', :value => "#{@trap.tags.map{|t| t.name}.join(" ")}"}/
+  %br
+
   %input{:type => 'submit', :name => 'submit'}/

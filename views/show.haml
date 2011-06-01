@@ -4,3 +4,5 @@
   = @trap.url
   %br
   = @trap.description
+  %br
+  %p= "Tags: #{@trap.tags.map{|t| t.name}.join(" ")}"
