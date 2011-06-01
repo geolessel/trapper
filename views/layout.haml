@@ -1,0 +1,18 @@
+!!!
+
+%html
+  %head
+    - title = "Trapper"
+    - title = "#{@page_title} > Trapper" unless @page_title.nil?
+    %title= title
+  %body
+    #body_wrapper
+      #header_wrapper
+        #header
+          %h1 Trapper
+      #content_wrapper
+        #content
+          = yield
+      #footer_wrapper
+        #footer
+          %p.right copyright 2011 geoffrey lessel
