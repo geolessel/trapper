@@ -1,0 +1,8 @@
+%h2 Tag search results
+%ul
+  - @found.each do |site|
+    %li
+      %p
+        %strong= site.name
+        = " - " + site.description + " (" + site.tags.map{|t| t.name}.join(" ") + ")"
+

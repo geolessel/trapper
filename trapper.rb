@@ -30,9 +30,7 @@ class Trap
   def update_tags(new_tags_array)
     new_tags = Array.new
     new_tags_array.each do |t|
-      puts t
       if nt = Tag.first(:name => t)
-        puts "Found tag: #{t}"
         new_tags << nt
       else
         new_tags << Tag.new(:name => t)
@@ -83,7 +81,6 @@ end
 # add words with '+' (/s/ruby+rails)
 get %r{/s(earch)?/(.+)} do
   terms = params[:captures][1].split(/\s/) # The + character is subbed by space for some reason
-  puts terms
   @found = Hash.new
   ['url', 'name', 'description'].each do |type|
     collection = Trap.all(eval(":#{type}").like => "%#{terms[0]}%")
@@ -97,6 +94,22 @@ get %r{/s(earch)?/(.+)} do
   else
     redirect '/'
   end
+end
+
+# allow /tags /tag and /t
+# add tags with '+'
+get %r{/t(ags?)?/(.+)} do
+  @found = Array.new
+  params[:captures][1].split(/\s/).each do |tag|
+    puts tag
+    if t = Tag.first(:name.like => "#{tag}")
+      @found = @found.empty? ? t.traps : @found & t.traps
+      @found.flatten!
+    end
+  end
+  @found.uniq!
+
+  haml :tags
 end
 
 get '/:id/edit' do
