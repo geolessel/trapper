@@ -27,6 +27,7 @@ class Trap
   property :created_at,  DateTime
   property :updated_at,  DateTime
 
+  default_scope(:default).update(:order => [:created_at.desc])
   has n, :tags, :through => Resource
 
   def update_tags(new_tags_array)
