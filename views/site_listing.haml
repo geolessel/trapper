@@ -1,0 +1,13 @@
+.site_listing
+  %span.link_name
+    %a{:href => url(site.url)}= site.name
+  |
+  %a{:href => url("/#{site.id}/edit")} edit
+  .description
+    = site.description
+  .meta
+    - site.tags.each do |tag|
+      %span.tag
+        %a{:href => url("/t/#{tag.name}")}= tag.name
+    |
+    = site.created_at

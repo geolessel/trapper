@@ -1,8 +1,3 @@
-%h2 Tag search results
-%ul
-  - @found.each do |site|
-    %li
-      %p
-        %strong= site.name
-        = " - " + site.description + " (" + site.tags.map{|t| t.name}.join(" ") + ")"
-
+%h2= "Tag search results (#{@tags.join(" + ")})"
+- @found.each do |site|
+  = haml :site_listing, :layout => false, :locals => {:site => site}

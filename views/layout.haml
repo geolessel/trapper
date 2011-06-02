@@ -5,14 +5,23 @@
     - title = "Trapper"
     - title = "#{@page_title} > Trapper" unless @page_title.nil?
     %title= title
+    %link{:href => "/css/reset.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
   %body
     #body_wrapper
       #header_wrapper
         #header
-          %h1 Trapper
+          %h1<
+          %a{:href => "/"} Trapper
+        #nav
+          %ul
+            %li
+              %a{:href => url("/")} Home
+            %li
+              %a{:href => url("/new")} New
       #content_wrapper
         #content
           = yield
-      #footer_wrapper
-        #footer
-          %p.right copyright 2011 geoffrey lessel
+    #footer_wrapper
+      #footer
+        %p.right copyright 2011 geoffrey lessel

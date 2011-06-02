@@ -1,8 +1,6 @@
 %h2 Search results
 - @found.each do |type, results|
   - next if results.size < 1
-  %h4= "Found on #{type}"
+  %h3= "Found on #{type}"
   - results.each do |site|
-    %ul
-      %li
-        %a{:href => url("/#{site.id}")}= eval("site.#{type}")
+    = haml :site_listing, :layout => false, :locals => {:site => site}

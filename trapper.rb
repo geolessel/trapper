@@ -6,6 +6,8 @@ require 'dm-core'
 require 'dm-timestamps'
 require 'dm-migrations'
 require 'dm-sqlite-adapter'
+require 'haml'
+require 'sass'
 
 ### Config
 
@@ -100,9 +102,10 @@ end
 # add tags with '+'
 get %r{/t(ags?)?/(.+)} do
   @found = Array.new
+  @tags = Array.new
   params[:captures][1].split(/\s/).each do |tag|
-    puts tag
     if t = Tag.first(:name.like => "#{tag}")
+      @tags << t.name
       @found = @found.empty? ? t.traps : @found & t.traps
       @found.flatten!
     end
@@ -129,6 +132,11 @@ post '/:id/edit' do
   else
     redirect "/#{@trap.id}/edit"
   end
+end
+
+get '/css/style.css' do
+  puts "rendering style.sass"
+  scss :style
 end
 
 get '/:id' do

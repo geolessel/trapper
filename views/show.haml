@@ -1,8 +1,2 @@
 %h2 Trapped Site
-%p
-  %strong= @trap.name
-  = @trap.url
-  %br
-  = @trap.description
-  %br
-  %p= "Tags: #{@trap.tags.map{|t| t.name}.join(" ")}"
+= haml :site_listing, :layout => false, :locals => {:site => @trap}
