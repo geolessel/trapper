@@ -8,6 +8,9 @@
   .meta
     - site.tags.each do |tag|
       %span.tag
+        - include_plus ||= false
+        - if include_plus
+          %a{:href => "#{request.url}+#{tag.name}"} +
         %a{:href => url("/t/#{tag.name}")}= tag.name
     |
     = site.created_at
