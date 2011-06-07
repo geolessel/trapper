@@ -17,7 +17,7 @@ DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/trapper.sqlite3")
 
 ### Models
 
-class Trap
+class Site
   include DataMapper::Resource
 
   property :id,          Serial
@@ -52,7 +52,7 @@ class Tag
   property :created_at,  DateTime
   property :updated_at,  DateTime
 
-  has n, :traps, :through => Resource
+  has n, :sites, :through => Resource
 end
 
 DataMapper.auto_upgrade!
@@ -61,20 +61,20 @@ DataMapper.auto_upgrade!
 ### Controllers
 
 get '/' do
-  @sites = Trap.all
+  @sites = Site.all
   haml :index
 end
 
 get '/new' do
-  @trap = Trap.new
+  @site = Site.new
   haml :new
 end
 
 post '/new' do
-  @trap = Trap.new
-  @trap.attributes = params[:trap]
-  if @trap.update_tags(params[:tags].split(/\s/)) && @trap.save
-    redirect "/#{@trap.id}"
+  @site = Site.new
+  @site.attributes = params[:site]
+  if @site.update_tags(params[:tags].split(/\s/)) && @site.save
+    redirect "/#{@site.id}"
   else
     redirect "/"
   end
@@ -86,9 +86,9 @@ get %r{/s(earch)?/(.+)} do
   terms = params[:captures][1].split(/\s/) # The + character is subbed by space for some reason
   @found = Hash.new
   ['url', 'name', 'description'].each do |type|
-    collection = Trap.all(eval(":#{type}").like => "%#{terms[0]}%")
+    collection = Site.all(eval(":#{type}").like => "%#{terms[0]}%")
     1.upto terms.size-1 do |i|
-      collection = collection & Trap.all(eval(":#{type}").like => "%#{terms[i]}%")
+      collection = collection & Site.all(eval(":#{type}").like => "%#{terms[i]}%")
     end
     @found[type] = collection
   end
@@ -107,7 +107,7 @@ get %r{/t(ags?)?/(.+)} do
   params[:captures][1].split(/\s/).each do |tag|
     if t = Tag.first(:name.like => "#{tag}")
       @tags << t.name
-      @found = @found.empty? ? t.traps : @found & t.traps
+      @found = @found.empty? ? t.sites : @found & t.sites
       @found.flatten!
     end
   end
@@ -117,8 +117,8 @@ get %r{/t(ags?)?/(.+)} do
 end
 
 get '/:id/edit' do
-  @trap = Trap.get(params[:id])
-  if @trap
+  @site = Site.get(params[:id])
+  if @site
     haml :edit
   else
     redirect '/'
@@ -126,12 +126,12 @@ get '/:id/edit' do
 end
 
 post '/:id/edit' do
-  @trap = Trap.get(params[:id])
-  @trap.attributes = params[:trap]
-  if @trap.update_tags(params[:tags].split(/\s/)) && @trap.save
-    redirect "/#{@trap.id}"
+  @site = Site.get(params[:id])
+  @site.attributes = params[:site]
+  if @site.update_tags(params[:tags].split(/\s/)) && @site.save
+    redirect "/#{@site.id}"
   else
-    redirect "/#{@trap.id}/edit"
+    redirect "/#{@site.id}/edit"
   end
 end
 
@@ -141,8 +141,8 @@ get '/css/style.css' do
 end
 
 get '/:id' do
-  @trap = Trap.get(params[:id])
-  if @trap
+  @site = Site.get(params[:id])
+  if @site
     haml :show
   else
     redirect '/'

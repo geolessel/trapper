@@ -1,22 +1,22 @@
 %form{:action => "#{request.path}", :method => 'post'}
   .input_pair
-    %label{:for => 'trap[url]'} URL
+    %label{:for => 'site[url]'} URL
     %br
-    %input{:size => "100", :type => 'textfield', :name => 'trap[url]', :id => 'trap[url]', :value => "#{@trap.url}"}/
+    %input{:size => "100", :type => 'textfield', :name => 'site[url]', :id => 'site[url]', :value => "#{@site.url}"}/
 
   .input_pair
-    %label{:for => 'trap[name]'} Name
+    %label{:for => 'site[name]'} Name
     %br
-    %input{:type => 'textfield', :name => 'trap[name]', :id => 'trap[name]', :value => "#{@trap.name}"}/
+    %input{:type => 'textfield', :name => 'site[name]', :id => 'site[name]', :value => "#{@site.name}"}/
 
   .input_pair
-    %label{:for => 'trap[description]'} Description
+    %label{:for => 'site[description]'} Description
     %br
-    %input{:type => 'textfield', :name => 'trap[description]', :id => 'trap[description]', :value => "#{@trap.description}"}/
+    %input{:type => 'textfield', :name => 'site[description]', :id => 'site[description]', :value => "#{@site.description}"}/
 
   .input_pair
     %label{:for => 'tags'} Tags (space separated)
     %br
-    %input{:type => 'textfield', :name => 'tags', :id => 'tags', :value => "#{@trap.tags.map{|t| t.name}.join(" ")}"}/
+    %input{:type => 'textfield', :name => 'tags', :id => 'tags', :value => "#{@site.tags.map{|t| t.name}.join(" ")}"}/
 
   %input{:type => 'submit', :name => 'submit'}/
