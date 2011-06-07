@@ -10,7 +10,10 @@
       %span.tag
         - include_plus ||= false
         - if include_plus
-          %a{:href => "#{request.url}+#{tag.name}"} +
+          - if request.url.match(/(\+?#{tag.name})/)
+            %a{:href => "#{request.url.sub(/\+?#{tag.name}/, '')}"} -
+          - else
+            %a{:href => "#{request.url}+#{tag.name}"} +
         %a{:href => url("/t/#{tag.name}")}= tag.name
     |
     = site.created_at
