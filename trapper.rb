@@ -67,6 +67,7 @@ end
 
 get '/new' do
   @site = Site.new
+  @page_title = "New"
   haml :new
 end
 
@@ -93,6 +94,7 @@ get %r{/s(earch)?/(.+)} do
     @found[type] = collection
   end
   if @found.size > 0
+    @page_title = "#{terms.join(", ")} > Search"
     haml :search
   else
     redirect '/'
@@ -113,12 +115,14 @@ get %r{/t(ags?)?/(.+)} do
   end
   @found.uniq!
 
+  @page_title = "#{@tags.join(", ")} > Tags"
   haml :tags
 end
 
 get '/:id/edit' do
   @site = Site.get(params[:id])
   if @site
+    @page_title = "#{@site.name} > Edit"
     haml :edit
   else
     redirect '/'
@@ -136,13 +140,13 @@ post '/:id/edit' do
 end
 
 get '/css/style.css' do
-  puts "rendering style.sass"
   scss :style
 end
 
 get '/:id' do
   @site = Site.get(params[:id])
   if @site
+    @page_title = "#{@site.name} > Site"
     haml :show
   else
     redirect '/'
