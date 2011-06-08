@@ -1,10 +1,13 @@
 require 'rubygems'
 require 'sinatra'
 
-Sinatra::Application.default_options.merge!(
-  :run => false,
-  :env => :production
-)
+set :run, false
+set :env, :production
 
-require 'trapper.rb'
-run Sinatra.application
+FileUtils.mkdir_p 'log' unless File.exists?("log")
+log = File.new("log/sinatra.log", "a")
+$stdout.reopen(log)
+$stderr.reopen(log)
+
+require 'trapper'
+run Sinatra::Application
