@@ -81,6 +81,24 @@ post '/new' do
   end
 end
 
+get '/save?*' do
+  @site = Site.new
+  @site.url = params[:url]
+  @site.name = params[:title]
+  @site.description = params[:notes]
+  haml :save
+end
+
+post '/save' do
+  @site = Site.new
+  @site.attributes = params[:site]
+  if @site.update_tags(params[:tags].split(/\s/)) && @site.save
+    redirect "/#{@site.id}"
+  else
+    redirect "/"
+  end
+end
+
 # allow both /search and /s
 # add words with '+' (/s/ruby+rails)
 get %r{/s(earch)?/(.+)} do
