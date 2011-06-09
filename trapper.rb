@@ -12,7 +12,7 @@ require 'sass'
 ### Config
 
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/trapper.sqlite3")
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/db/trapper.sqlite3")
 
 
 ### Models
