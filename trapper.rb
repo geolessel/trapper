@@ -105,9 +105,9 @@ get %r{/s(earch)?/(.+)} do
   terms = params[:captures][1].split(/\s/) # The + character is subbed by space for some reason
   @found = Hash.new
   ['url', 'name', 'description'].each do |type|
-    collection = Site.all(eval(":#{type}").like => "%#{terms[0]}%")
+    collection = Site.all(eval(":#{type}").like => "%" + terms[0] + "%")
     1.upto terms.size-1 do |i|
-      collection = collection & Site.all(eval(":#{type}").like => "%#{terms[i]}%")
+      collection = collection & Site.all(eval(":#{type}").like => "%" + terms[i] "%")
     end
     @found[type] = collection
   end
@@ -125,7 +125,7 @@ get %r{/t(ags?)?/(.+)} do
   @found = Array.new
   @tags = Array.new
   params[:captures][1].split(/\s/).each do |tag|
-    if t = Tag.first(:name.like => "#{tag}")
+    if t = Tag.first(:name.like => "%" + tag + "%")
       @tags << t.name
       @found = @found.empty? ? t.sites : @found & t.sites
       @found.flatten!
